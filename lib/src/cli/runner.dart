@@ -28,14 +28,14 @@ class AuditOptions {
 Future<void> runAudit(AuditOptions options) async {
   final projectDir = Directory(options.projectPath);
   if (!projectDir.existsSync()) {
-    throw Exception('Project directory not found: \${options.projectPath}');
+    throw Exception('Project directory not found: ${options.projectPath}');
   }
 
   final pubspecFile = File(p.join(projectDir.path, 'pubspec.yaml'));
   final lockFile = File(p.join(projectDir.path, 'pubspec.lock'));
 
   if (!pubspecFile.existsSync()) {
-    throw Exception('pubspec.yaml not found in \${projectDir.path}');
+    throw Exception('pubspec.yaml not found in ${projectDir.path}');
   }
 
   var dependencies = parsePubspec(pubspecFile);

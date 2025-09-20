@@ -9,7 +9,7 @@ Map<String, dynamic> _loadYamlFile(File file) {
     final yamlMap = loadYaml(content) as YamlMap;
     return Map<String, dynamic>.from(yamlMap.map((k, v) => MapEntry(k.toString(), v)));
   } catch (e) {
-    throw Exception('Failed to parse YAML file: \${file.path}. Error: \$e');
+    throw Exception('Failed to parse YAML file: ${file.path}. Error: $e');
   }
 }
 

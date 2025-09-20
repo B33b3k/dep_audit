@@ -16,7 +16,7 @@ void main(List<String> arguments) async {
   try {
     argResults = parser.parse(arguments);
   } on FormatException catch (e) {
-    stderr.writeln('Error parsing arguments: \${e.message}');
+    stderr.writeln('Error parsing arguments: ${e.message}');
     stderr.writeln(parser.usage);
     exit(1);
   }
@@ -39,7 +39,7 @@ void main(List<String> arguments) async {
   try {
     await runAudit(options);
   } catch (e, st) {
-    stderr.writeln('An unexpected error occurred: \$e');
+    stderr.writeln('An unexpected error occurred: $e');
     stderr.writeln(st);
     exit(2);
   }
