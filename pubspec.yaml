@@ -2,8 +2,8 @@
 name: dep_audit
 description: A lightweight dependency & package health auditor for Dart/Flutter projects.
 version: 0.1.0
-homepage: https://github.com/your_username/dep_audit
-repository: https://github.com/your_username/dep_audit
+homepage: https://github.com/B33b3k/dep_audit
+repository: https://github.com/B33b3k/dep_audit
 environment:
   sdk: '>=3.0.0 <4.0.0'
 
