@@ -9,13 +9,27 @@ import '../pubspec_parser.dart';
 import '../reporter.dart';
 import '../scanner.dart';
 
+/// Configuration options for running a dependency audit.
+/// 
+/// Controls various aspects of the audit process including which
+/// dependencies to include, output format, and whether to apply fixes.
 class AuditOptions {
+  /// The path to the project directory to audit.
   final String projectPath;
+  
+  /// The output format for the report ('text' or 'json').
   final String format;
+  
+  /// Whether to include dev_dependencies in the audit.
   final bool includeDevDependencies;
+  
+  /// Set of package names to ignore during the audit.
   final Set<String> ignoredPackages;
+  
+  /// Whether to automatically apply safe fixes.
   final bool applyFixes;
 
+  /// Creates a new [AuditOptions] instance.
   AuditOptions({
     required this.projectPath,
     this.format = 'text',
@@ -25,6 +39,16 @@ class AuditOptions {
   });
 }
 
+/// Runs a comprehensive dependency audit on the specified project.
+/// 
+/// This function performs the main audit logic:
+/// 1. Parses pubspec.yaml and pubspec.lock
+/// 2. Scans source code for package imports
+/// 3. Fetches metadata from pub.dev
+/// 4. Analyzes each dependency for issues
+/// 5. Optionally applies automatic fixes
+/// 
+/// Throws [Exception] if the project directory or pubspec.yaml is not found.
 Future<void> runAudit(AuditOptions options) async {
   final projectDir = Directory(options.projectPath);
   if (!projectDir.existsSync()) {

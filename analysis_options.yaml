@@ -1,0 +1,39 @@
+linter:
+  rules:
+    # Enforce documentation on public API members
+    public_member_api_docs: true
+    
+    # Other useful rules for package development
+    prefer_relative_imports: true
+    sort_pub_dependencies: true
+    avoid_empty_else: true
+    avoid_print: false  # Allow print statements for CLI tool
+    cancel_subscriptions: true
+    close_sinks: true
+    comment_references: true
+    one_member_abstracts: true
+    only_throw_errors: true
+    package_names: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_fields: true
+    prefer_final_locals: true
+    prefer_is_not_empty: true
+    prefer_single_quotes: true
+    test_types_in_equals: true
+    throw_in_finally: true
+    unnecessary_const: true
+    unnecessary_new: true
+    unnecessary_null_in_if_null_operators: true
+    unnecessary_statements: true
+    use_rethrow_when_possible: true
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/generated_plugin_registrant.dart"
+  
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false

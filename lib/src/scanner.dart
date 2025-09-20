@@ -3,6 +3,19 @@ import 'dart:io';
 import 'package:glob/glob.dart';
 import 'package:glob/list_local_fs.dart';
 
+/// Scans a project directory for package imports in Dart source files.
+/// 
+/// This function searches through common Dart source directories
+/// (lib, bin, test, example, integration_test) and extracts all
+/// package imports to determine which dependencies are actually used.
+/// 
+/// Returns a [Set] of package names that are imported in the source code.
+/// 
+/// Example:
+/// ```dart
+/// final usedPackages = scanForPackageImports(Directory('./my_project'));
+/// print(usedPackages); // {'http', 'path', 'test', ...}
+/// ```
 Set<String> scanForPackageImports(Directory root) {
   final globs = [
     Glob('lib/**.dart'),

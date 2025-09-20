@@ -16,7 +16,7 @@ void main() {
     });
 
     test('correctly parses dependencies and dev_dependencies', () {
-      final pubspecContent = '''
+      const pubspecContent = '''
       name: test_project
       environment:
         sdk: '>=3.0.0 <4.0.0'

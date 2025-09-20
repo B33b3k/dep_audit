@@ -2,6 +2,19 @@
 import 'dart:convert';
 import 'models.dart';
 
+/// Formats audit results into the specified output format.
+/// 
+/// Supports both human-readable text format and machine-readable JSON format.
+/// The text format includes visual indicators and is suitable for terminal output.
+/// The JSON format is useful for CI/CD pipelines and automated processing.
+/// 
+/// Returns a formatted string representation of the audit results.
+/// 
+/// Example:
+/// ```dart
+/// final report = formatReport(auditResults, 'text');
+/// print(report);
+/// ```
 String formatReport(List<AuditResult> results, String format) {
   switch (format) {
     case 'json':
@@ -59,5 +72,5 @@ String _formatJsonReport(List<AuditResult> results) {
       'message': r.message,
     }).toList(),
   };
-  return JsonEncoder.withIndent('  ').convert(reportData);
+  return const JsonEncoder.withIndent('  ').convert(reportData);
 }
