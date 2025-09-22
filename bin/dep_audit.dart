@@ -1,16 +1,23 @@
-
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:dep_audit/dep_audit.dart';
 
 void main(List<String> arguments) async {
   final parser = ArgParser()
-    ..addOption('path', abbr: 'p', defaultsTo: '.', help: 'Project path to audit.')
-    ..addOption('format', abbr: 'f', defaultsTo: 'text', allowed: ['text', 'json'], help: 'Output format.')
-    ..addMultiOption('ignore', help: 'Comma-separated list of packages to ignore.')
-    ..addFlag('include-dev', defaultsTo: false, help: 'Include dev_dependencies in the audit.')
+    ..addOption('path',
+        abbr: 'p', defaultsTo: '.', help: 'Project path to audit.')
+    ..addOption('format',
+        abbr: 'f',
+        defaultsTo: 'text',
+        allowed: ['text', 'json'],
+        help: 'Output format.')
+    ..addMultiOption('ignore',
+        help: 'Comma-separated list of packages to ignore.')
+    ..addFlag('include-dev',
+        defaultsTo: false, help: 'Include dev_dependencies in the audit.')
     ..addFlag('fix', defaultsTo: false, help: 'Automatically apply safe fixes.')
-    ..addFlag('help', abbr: 'h', negatable: false, help: 'Displays this help message.');
+    ..addFlag('help',
+        abbr: 'h', negatable: false, help: 'Displays this help message.');
 
   ArgResults argResults;
   try {
@@ -22,7 +29,8 @@ void main(List<String> arguments) async {
   }
 
   if (argResults['help'] as bool) {
-    print('dep_audit - A dependency & package health auditor for Dart/Flutter.');
+    print(
+        'dep_audit - A dependency & package health auditor for Dart/Flutter.');
     print('');
     print(parser.usage);
     exit(0);

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:dep_audit/dep_audit.dart';
 import 'package:test/test.dart';
@@ -25,7 +24,8 @@ void main() {
       dev_dependencies:
         test: ^1.20.0
       ''';
-      final pubspecFile = File('${tempDir.path}/pubspec.yaml')..writeAsStringSync(pubspecContent);
+      final pubspecFile = File('${tempDir.path}/pubspec.yaml')
+        ..writeAsStringSync(pubspecContent);
 
       final dependencies = parsePubspec(pubspecFile);
 

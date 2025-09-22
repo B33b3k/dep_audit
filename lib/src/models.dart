@@ -1,18 +1,17 @@
-
 /// Represents information about a dependency declared in pubspec.yaml.
-/// 
+///
 /// Contains details about the package name, version constraints,
 /// locked version, and whether it's a development dependency.
 class DependencyInfo {
   /// The name of the package.
   final String name;
-  
+
   /// The version constraint declared in pubspec.yaml (e.g., '^1.0.0').
   final String? declaredConstraint;
-  
+
   /// The actual locked version from pubspec.lock.
   String? lockedVersion;
-  
+
   /// Whether this is a development dependency.
   final bool dev;
 
@@ -26,19 +25,19 @@ class DependencyInfo {
 }
 
 /// Metadata about a package fetched from pub.dev.
-/// 
+///
 /// Contains information about the latest version, update timestamp,
 /// and whether the package has been discontinued.
 class PackageMetadata {
   /// The name of the package.
   final String name;
-  
+
   /// The latest available version on pub.dev.
   final String latestVersion;
-  
+
   /// When the package was last updated.
   final DateTime? updatedAt;
-  
+
   /// Whether the package has been marked as discontinued.
   final bool discontinued;
 
@@ -58,40 +57,40 @@ class PackageMetadata {
 }
 
 /// The status of a dependency after auditing.
-enum AuditStatus { 
+enum AuditStatus {
   /// Package is up to date and in use.
-  ok, 
-  
+  ok,
+
   /// A newer version is available.
-  updateAvailable, 
-  
+  updateAvailable,
+
   /// Package is declared but not imported in code.
-  unused, 
-  
+  unused,
+
   /// Package has been marked as discontinued.
-  discontinued, 
-  
+  discontinued,
+
   /// Package hasn't been updated in over a year.
-  stale, 
-  
+  stale,
+
   /// Unable to determine status (e.g., network error).
-  unknown 
+  unknown
 }
 
 /// The result of auditing a single dependency.
-/// 
+///
 /// Contains the dependency information, package metadata from pub.dev,
 /// the audit status, and any additional messages.
 class AuditResult {
   /// The dependency that was audited.
   final DependencyInfo dependency;
-  
+
   /// Metadata fetched from pub.dev (if available).
   final PackageMetadata? metadata;
-  
+
   /// The status determined by the audit.
   final AuditStatus status;
-  
+
   /// Additional message explaining the status.
   final String? message;
 

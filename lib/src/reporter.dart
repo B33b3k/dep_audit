@@ -1,15 +1,14 @@
-
 import 'dart:convert';
 import 'models.dart';
 
 /// Formats audit results into the specified output format.
-/// 
+///
 /// Supports both human-readable text format and machine-readable JSON format.
 /// The text format includes visual indicators and is suitable for terminal output.
 /// The JSON format is useful for CI/CD pipelines and automated processing.
-/// 
+///
 /// Returns a formatted string representation of the audit results.
-/// 
+///
 /// Example:
 /// ```dart
 /// final report = formatReport(auditResults, 'text');
@@ -43,7 +42,8 @@ String _formatConsoleReport(List<AuditResult> results) {
     final latest = (r.metadata?.latestVersion ?? '-').padRight(12);
     final statusText = r.status.toString().split('.').last;
 
-    buffer.writeln('$statusSymbol $name Current: $current Latest: $latest Status: $statusText');
+    buffer.writeln(
+        '$statusSymbol $name Current: $current Latest: $latest Status: $statusText');
     if (r.message != null) {
       buffer.writeln('  └─ ${r.message}');
     }
@@ -53,24 +53,32 @@ String _formatConsoleReport(List<AuditResult> results) {
 
 String _getStatusSymbol(AuditStatus status) {
   switch (status) {
-    case AuditStatus.ok: return '✅';
-    case AuditStatus.updateAvailable: return '⬆️ ';
-    case AuditStatus.unused: return '🗑️ ';
-    case AuditStatus.discontinued: return '⚠️ ';
-    case AuditStatus.stale: return '⏳';
-    case AuditStatus.unknown: return '❓';
+    case AuditStatus.ok:
+      return '✅';
+    case AuditStatus.updateAvailable:
+      return '⬆️ ';
+    case AuditStatus.unused:
+      return '🗑️ ';
+    case AuditStatus.discontinued:
+      return '⚠️ ';
+    case AuditStatus.stale:
+      return '⏳';
+    case AuditStatus.unknown:
+      return '❓';
   }
 }
 
 String _formatJsonReport(List<AuditResult> results) {
   final reportData = {
-    'results': results.map((r) => {
-      'package': r.dependency.name,
-      'currentVersion': r.dependency.lockedVersion,
-      'latestVersion': r.metadata?.latestVersion,
-      'status': r.status.toString().split('.').last,
-      'message': r.message,
-    }).toList(),
+    'results': results
+        .map((r) => {
+              'package': r.dependency.name,
+              'currentVersion': r.dependency.lockedVersion,
+              'latestVersion': r.metadata?.latestVersion,
+              'status': r.status.toString().split('.').last,
+              'message': r.message,
+            })
+        .toList(),
   };
   return const JsonEncoder.withIndent('  ').convert(reportData);
 }

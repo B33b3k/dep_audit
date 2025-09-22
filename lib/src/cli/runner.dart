@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:pub_semver/pub_semver.dart';
@@ -10,22 +9,22 @@ import '../reporter.dart';
 import '../scanner.dart';
 
 /// Configuration options for running a dependency audit.
-/// 
+///
 /// Controls various aspects of the audit process including which
 /// dependencies to include, output format, and whether to apply fixes.
 class AuditOptions {
   /// The path to the project directory to audit.
   final String projectPath;
-  
+
   /// The output format for the report ('text' or 'json').
   final String format;
-  
+
   /// Whether to include dev_dependencies in the audit.
   final bool includeDevDependencies;
-  
+
   /// Set of package names to ignore during the audit.
   final Set<String> ignoredPackages;
-  
+
   /// Whether to automatically apply safe fixes.
   final bool applyFixes;
 
@@ -40,14 +39,14 @@ class AuditOptions {
 }
 
 /// Runs a comprehensive dependency audit on the specified project.
-/// 
+///
 /// This function performs the main audit logic:
 /// 1. Parses pubspec.yaml and pubspec.lock
 /// 2. Scans source code for package imports
 /// 3. Fetches metadata from pub.dev
 /// 4. Analyzes each dependency for issues
 /// 5. Optionally applies automatic fixes
-/// 
+///
 /// Throws [Exception] if the project directory or pubspec.yaml is not found.
 Future<void> runAudit(AuditOptions options) async {
   final projectDir = Directory(options.projectPath);
@@ -102,13 +101,14 @@ Future<void> runAudit(AuditOptions options) async {
             message = 'Update available: \${metadata.latestVersion}';
           }
         } catch (e) {
-           message = 'Could not compare versions (\${dep.lockedVersion} vs \${metadata.latestVersion})';
-           status = AuditStatus.unknown;
+          message =
+              'Could not compare versions (\${dep.lockedVersion} vs \${metadata.latestVersion})';
+          status = AuditStatus.unknown;
         }
       }
     } else {
-        status = AuditStatus.unknown;
-        message = 'Could not fetch package metadata from pub.dev.';
+      status = AuditStatus.unknown;
+      message = 'Could not fetch package metadata from pub.dev.';
     }
 
     results.add(AuditResult(
@@ -130,10 +130,13 @@ Future<void> runAudit(AuditOptions options) async {
   }
 }
 
-Future<void> _applyFixes(List<AuditResult> results, Directory projectDir) async {
-  final fixableResults = results.where((r) => 
-    r.status == AuditStatus.unused || r.status == AuditStatus.updateAvailable
-  ).toList();
+Future<void> _applyFixes(
+    List<AuditResult> results, Directory projectDir) async {
+  final fixableResults = results
+      .where((r) =>
+          r.status == AuditStatus.unused ||
+          r.status == AuditStatus.updateAvailable)
+      .toList();
 
   if (fixableResults.isEmpty) {
     print('\n✅ No fixes needed - all dependencies are up to date and in use.');
