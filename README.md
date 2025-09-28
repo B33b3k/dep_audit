@@ -22,8 +22,6 @@
 
 A powerful, lightweight dependency and package health auditor for Dart & Flutter projects. `dep_audit` scans your `pubspec.yaml` and source code to create a clear, actionable report on your project's dependencies.
 
-> ⚠️ **Repository Status**: Make repository public to enable CI badges, codecov, and automated publishing of versions 0.1.4+
-> 
 > 🎯 **Perfect pub.dev Score**: Rated 160/160 points with full WASM compatibility
 
 ## 📋 Table of Contents
