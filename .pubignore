@@ -27,3 +27,12 @@ scripts/
 # Test files (optional - you might want to include these)
 # Uncomment the next line if you don't want test files in the package
 # test/
+
+# Exclude gitignored but tracked files
+.dart_tool/package_config.json
+.dart_tool/package_graph.json
+.dart_tool/pub/bin/dep_audit/dep_audit.dart-3.9.0.snapshot
+.dart_tool/pub/bin/test/test.dart-3.9.0.snapshot
+.dart_tool/pub/bin/test/test.dart-3.9.2.snapshot
+.dart_tool/test/incremental_kernel.Ly9AZGFydD0zLjA=
+.github/workflows/github-packages.yml
