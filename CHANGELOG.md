@@ -1,4 +1,10 @@
 
+## 0.1.2
+
+- 🔧 **Package Maintenance**: Updated package metadata and improved pub.dev compatibility
+- 📝 **Documentation**: Enhanced package description and documentation
+- ✅ **Quality Improvements**: Addressed pub.dev analysis recommendations
+
 ## 0.1.1
 
 - ✨ **Comprehensive API Documentation**: Added complete dartdoc comments to all public APIs
