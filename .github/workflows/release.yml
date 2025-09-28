@@ -1,27 +1,15 @@
-# Official pub.dev publishing workflow using GitHub Actions OIDC
-name: Publish to pub.dev
+# Create GitHub releases (pub.dev publishing handled by publish.yml)
+name: Create GitHub Release
 
 on:
   push:
     tags:
-      # Must align with tag-pattern configured on pub.dev
-      - 'v[0-9]+.[0-9]+.[0-9]+'  # For tags like: v1.2.3
+      - 'v[0-9]+.[0-9]+.[0-9]+*'  # Must match pub.dev tag pattern
 
 jobs:
-  # Official pub.dev publishing using the reusable workflow
-  publish:
-    name: Publish to pub.dev
-    permissions:
-      id-token: write # Required for authentication using OIDC
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
-    # Uncomment if package is in subdirectory:
-    # with:
-    #   working-directory: path/to/package
-
-  # Create GitHub release after successful pub.dev publishing
+  # Create GitHub release after pub.dev publishing
   github-release:
     name: Create GitHub Release
-    needs: publish
     runs-on: ubuntu-latest
     permissions:
       contents: write
