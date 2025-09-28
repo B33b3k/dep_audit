@@ -1,0 +1,43 @@
+name: Question / Support
+description: Ask a question or get help
+title: "[QUESTION] "
+labels: ["question", "help wanted"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your question! We're here to help. 🤝
+        
+        **Before asking:** Please check the [README](https://github.com/B33b3k/dep_audit#readme) and [documentation](https://pub.dev/packages/dep_audit) first.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What would you like to know?
+      placeholder: Ask your question here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide context about what you're trying to achieve
+      placeholder: |
+        - What are you trying to do?
+        - What have you tried already?
+        - What error or behavior are you seeing?
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment (if relevant)
+      description: Your environment details
+      placeholder: |
+        - OS: [e.g. macOS, Ubuntu, Windows]
+        - Dart SDK: [e.g. 3.1.0]
+        - dep_audit version: [e.g. 0.1.3]
+        - Project type: [e.g. Flutter app, Dart package]

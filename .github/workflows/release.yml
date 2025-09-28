@@ -1,0 +1,119 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    name: Release to GitHub and pub.dev
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        dart-version: 'stable'
+
+    - name: Install dependencies
+      run: dart pub get
+
+    - name: Run tests
+      run: dart test
+
+    - name: Verify package
+      run: dart pub publish --dry-run
+
+    - name: Extract version from tag
+      id: version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ github.ref_name }}
+        name: "Release ${{ steps.version.outputs.VERSION }}"
+        body: |
+          ## What's Changed
+          
+          See [CHANGELOG.md](https://github.com/B33b3k/dep_audit/blob/main/CHANGELOG.md) for detailed changes.
+          
+          ## Installation
+          
+          ```bash
+          dart pub global activate dep_audit
+          ```
+          
+          ## Usage
+          
+          ```bash
+          dep_audit --help
+          ```
+        draft: false
+        prerelease: ${{ contains(steps.version.outputs.VERSION, '-') }}
+        generateReleaseNotes: true
+
+    - name: Publish to pub.dev
+      uses: dart-lang/setup-dart@v1
+      with:
+        dart-version: 'stable'
+    
+    - name: Setup pub credentials
+      run: |
+        mkdir -p ~/.pub-cache
+        echo '${{ secrets.PUB_CREDENTIALS }}' > ~/.pub-cache/credentials.json
+    
+    - name: Publish package
+      run: dart pub publish --force
+
+  # Build binaries for different platforms
+  build-binaries:
+    name: Build binaries
+    needs: release
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: linux-x64
+            artifact-name: dep_audit-linux-x64
+          - os: macos-latest
+            target: macos-x64
+            artifact-name: dep_audit-macos-x64
+          - os: windows-latest
+            target: windows-x64
+            artifact-name: dep_audit-windows-x64.exe
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        dart-version: 'stable'
+
+    - name: Install dependencies
+      run: dart pub get
+
+    - name: Build executable
+      run: dart compile exe bin/dep_audit.dart -o ${{ matrix.artifact-name }}
+
+    - name: Upload binary to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.release.outputs.upload_url }}
+        asset_path: ./${{ matrix.artifact-name }}
+        asset_name: ${{ matrix.artifact-name }}
+        asset_content_type: application/octet-stream

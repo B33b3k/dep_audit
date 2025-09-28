@@ -3,29 +3,84 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        dart-version: ['3.0.0', 'stable']
+    
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Set up Dart
-        uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 'stable'
+    - name: Setup Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        dart-version: ${{ matrix.dart-version }}
 
-      - name: Install dependencies
-        run: dart pub get
+    - name: Print Dart version
+      run: dart --version
 
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
+    - name: Install dependencies
+      run: dart pub get
 
-      - name: Analyze project
-        run: dart analyze
+    - name: Verify formatting
+      run: dart format --output=none --set-exit-if-changed .
 
-      - name: Run tests
+    - name: Analyze project source
+      run: dart analyze --fatal-infos
+
+    - name: Run tests with coverage
+      run: |
+        dart pub global activate coverage
+        dart test --coverage=coverage
+        dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --report-on=lib
+
+    - name: Upload coverage to Codecov
+      if: matrix.os == 'ubuntu-latest' && matrix.dart-version == 'stable'
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage/lcov.info
+        fail_ci_if_error: false
+
+    - name: Test package executable
+      run: |
+        dart compile exe bin/dep_audit.dart -o dep_audit${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+        ./dep_audit${{ matrix.os == 'windows-latest' && '.exe' || '' }} --help
+
+  # Package validation
+  pub-dry-run:
+    name: Package validation
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        dart-version: 'stable'
+
+    - name: Install dependencies
+      run: dart pub get
+
+    - name: Check package score
+      run: |
+        dart pub global activate pana
+        pana --no-warning
+
+    - name: Dry run pub publish
+      run: dart pub publish --dry-run
         run: dart test
