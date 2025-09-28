@@ -34,3 +34,6 @@ scripts/
 
 # Logs
 *.log
+# GitHub Packages and additional documentation (keep private)
+GITHUB_PACKAGES.md
+.github/workflows/github-packages.yml
