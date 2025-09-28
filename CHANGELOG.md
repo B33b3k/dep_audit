@@ -1,4 +1,12 @@
 
+## 0.1.4
+
+- 🚀 **Automated Publishing**: Implemented official GitHub Actions OIDC publishing
+- 🔐 **Enhanced Security**: No more long-lived secrets, using temporary GitHub tokens
+- 📊 **Professional Setup**: Complete CI/CD pipeline with coverage reporting
+- 🤝 **Contributing Ready**: Full contributor infrastructure with templates and guides
+- 📝 **Documentation**: Comprehensive setup guides and professional README with badges
+
 ## 0.1.3
 
 - 🌐 **Web Platform Support**: Added web platform compatibility for WASM support
