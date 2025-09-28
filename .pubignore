@@ -1,0 +1,29 @@
+# Files to exclude from pub.dev publishing
+# (but keep in git repository)
+
+# Development and CI files
+.github/
+.gitignore
+.pubignore
+Makefile
+codecov.yml
+
+# Documentation for development/setup
+AUTOMATION_SETUP.md
+CONTRIBUTING.md
+AUTHORS.md
+GITHUB_SETUP_COMPLETE.md
+PUB_DEV_SETUP_GUIDE.md
+FINAL_SETUP_STEPS.md
+
+# Build and development artifacts
+.dart_tool/
+pubspec.lock
+coverage/
+
+# Scripts for development/release
+scripts/
+
+# Test files (optional - you might want to include these)
+# Uncomment the next line if you don't want test files in the package
+# test/

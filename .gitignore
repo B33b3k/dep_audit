@@ -1,10 +1,8 @@
-# Dart/Flutter build artifacts
-.dart_tool/
+# Dart/Flutter build artifacts (keep some for development)
 .packages
 build/
-pubspec.lock
 
-# Coverage reports  
+# Coverage reports (exclude from git, but keep for CI)
 coverage/
 *.lcov
 
@@ -16,9 +14,6 @@ coverage/
 # OS files
 .DS_Store
 Thumbs.db
-
-# Test artifacts
-.test_coverage.dart
 
 # Temporary files
 *.tmp
