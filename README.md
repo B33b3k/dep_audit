@@ -8,8 +8,8 @@
 [![popularity](https://img.shields.io/pub/popularity/dep_audit?style=flat-square&logo=dart)](https://pub.dev/packages/dep_audit/score)
 [![likes](https://img.shields.io/pub/likes/dep_audit?style=flat-square&logo=dart)](https://pub.dev/packages/dep_audit/score)
 
-[![CI](https://img.shields.io/github/actions/workflow/status/B33b3k/dep_audit/ci.yml?branch=main&style=flat-square&logo=github)](https://github.com/B33b3k/dep_audit/actions)
-[![codecov](https://img.shields.io/codecov/c/github/B33b3k/dep_audit?style=flat-square&logo=codecov)](https://codecov.io/gh/B33b3k/dep_audit)
+[![CI](https://img.shields.io/github/actions/workflow/status/B33b3k/dep_audit/ci.yml?branch=main&style=flat-square&logo=github&label=CI)](https://github.com/B33b3k/dep_audit/actions)
+[![codecov](https://img.shields.io/codecov/c/github/B33b3k/dep_audit?style=flat-square&logo=codecov&token=4645bec0-ee79-4770-ae83-4ba44f0e6ba9)](https://codecov.io/gh/B33b3k/dep_audit)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 [![Dart](https://img.shields.io/badge/Dart-3.0+-00599C.svg?style=flat-square&logo=dart)](https://dart.dev)
@@ -22,6 +22,8 @@
 
 A powerful, lightweight dependency and package health auditor for Dart & Flutter projects. `dep_audit` scans your `pubspec.yaml` and source code to create a clear, actionable report on your project's dependencies.
 
+> ⚠️ **Repository Status**: Make repository public to enable CI badges, codecov, and automated publishing of versions 0.1.4+
+> 
 > 🎯 **Perfect pub.dev Score**: Rated 160/160 points with full WASM compatibility
 
 ## 📋 Table of Contents
