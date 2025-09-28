@@ -211,3 +211,4 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
 Made with ❤️ by [@B33b3k](https://github.com/B33b3k) | [Report Bug](https://github.com/B33b3k/dep_audit/issues) | [Request Feature](https://github.com/B33b3k/dep_audit/issues)
 
 </div>
+
