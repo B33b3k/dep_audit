@@ -1,4 +1,11 @@
 
+## [0.1.8] - 2025-09-28
+
+### Fixed
+- Resolved package validation issues by removing tracked files that should be ignored by .gitignore
+- Fixed git repository state for clean publishing
+- Cleaned up .dart_tool and .github/workflows/github-packages.yml from version control
+
 ## [0.1.7] - 2025-09-28
 
 ### Fixed
