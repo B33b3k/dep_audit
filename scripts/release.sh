@@ -271,16 +271,30 @@ publish_package() {
         echo
         
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-            print_status "Publishing package to pub.dev..."
-            if dart pub publish; then
-                print_success "Package published successfully! 🎉"
+            print_status "Creating git tag for automated publishing..."
+            print_warning "📝 NOTE: Using official GitHub Actions OIDC publishing"
+            print_status "The tag will trigger automated pub.dev publishing via GitHub Actions"
+            
+            if git tag "v$new_version"; then
+                print_success "Git tag v$new_version created successfully!"
                 
-                # Create GitHub release if we're in a git repository
-                if git rev-parse --git-dir > /dev/null 2>&1; then
-                    create_github_release "$new_version"
+                print_status "Pushing tag to trigger automated publishing..."
+                if git push origin "v$new_version"; then
+                    print_success "Tag pushed! Automated publishing initiated! 🚀"
+                    print_status "Monitor progress at: https://github.com/$(git remote get-url origin | sed 's/.*github.com[:/]\([^/]*\/[^/]*\).*/\1/' | sed 's/\.git$//')/actions"
+                    
+                    # Create GitHub release locally if gh CLI is available
+                    if command -v gh &> /dev/null; then
+                        create_github_release "$new_version"
+                    else
+                        print_status "GitHub release will be created automatically by the workflow"
+                    fi
+                else
+                    print_error "Failed to push tag"
+                    exit 1
                 fi
             else
-                print_error "Publication failed"
+                print_error "Failed to create git tag"
                 exit 1
             fi
         else
@@ -348,12 +362,14 @@ main() {
     echo "  2. Update CHANGELOG.md with new release notes"
     echo "  3. Run pre-release checks (analyze, tests)"
     echo "  4. Commit changes and create git tag"
-    echo "  5. Push to remote repository"
+    echo "  5. Push tag to trigger automated publishing"
     if [[ "$DRY_RUN" == true ]]; then
-        echo "  6. Run publication dry-run only"
+        echo "  6. Run publication dry-run only (no tag creation)"
     else
-        echo "  6. Publish to pub.dev"
+        echo "  6. Trigger GitHub Actions → pub.dev publishing"
     fi
+    echo ""
+    print_status "🔒 Using official GitHub Actions OIDC (no secrets needed)"
     echo ""
     
     read -p "Do you want to continue? (y/N): " -n 1 -r

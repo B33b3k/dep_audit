@@ -202,9 +202,15 @@ def publish_package(dry_run):
         
         response = input("Are you sure you want to continue? (y/N): ")
         if response.lower().startswith('y'):
-            print_status("Publishing package to pub.dev...")
-            run_command("dart pub publish")
-            print_success("Package published successfully! 🎉")
+            print_status("Creating git tag for automated publishing...")
+            print_warning("📝 NOTE: Using official GitHub Actions OIDC publishing")
+            print_status("The tag will trigger automated pub.dev publishing via GitHub Actions")
+            
+            run_command(f"git tag v{new_version}")
+            run_command(f"git push origin v{new_version}")
+            
+            print_success("Tag pushed! Automated publishing initiated! 🚀")
+            print_status("Monitor progress at: https://github.com/B33b3k/dep_audit/actions")
         else:
             print_warning("Publication cancelled by user")
             sys.exit(0)

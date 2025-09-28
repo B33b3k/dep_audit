@@ -1,40 +1,55 @@
-name: Release
+# Official pub.dev publishing workflow using GitHub Actions OIDC
+name: Publish to pub.dev
 
 on:
   push:
     tags:
-      - 'v*.*.*'
-
-permissions:
-  contents: write
-  id-token: write
+      # Must align with tag-pattern configured on pub.dev
+      - 'v[0-9]+.[0-9]+.[0-9]+'  # For tags like: v1.2.3
 
 jobs:
-  release:
-    name: Release to GitHub and pub.dev
+  # Official pub.dev publishing using the reusable workflow
+  publish:
+    name: Publish to pub.dev
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    # Uncomment if package is in subdirectory:
+    # with:
+    #   working-directory: path/to/package
+
+  # Create GitHub release after successful pub.dev publishing
+  github-release:
+    name: Create GitHub Release
+    needs: publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup Dart SDK
-      uses: dart-lang/setup-dart@v1
-      with:
-        dart-version: 'stable'
-
-    - name: Install dependencies
-      run: dart pub get
-
-    - name: Run tests
-      run: dart test
-
-    - name: Verify package
-      run: dart pub publish --dry-run
-
     - name: Extract version from tag
       id: version
       run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+    - name: Extract changelog for version
+      id: changelog
+      run: |
+        # Extract changelog section for this version
+        if [[ -f "CHANGELOG.md" ]]; then
+          CHANGELOG_CONTENT=$(awk "/^## ${{ steps.version.outputs.VERSION }}/,/^## /{if(/^## ${{ steps.version.outputs.VERSION }}/) p=1; else if(/^## / && p) exit; if(p && !/^## ${{ steps.version.outputs.VERSION }}/) print}" CHANGELOG.md)
+          if [[ -n "$CHANGELOG_CONTENT" ]]; then
+            echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "CHANGELOG=No changelog entry found for version ${{ steps.version.outputs.VERSION }}" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "CHANGELOG=See commit history for changes in this release." >> $GITHUB_OUTPUT
+        fi
 
     - name: Create GitHub Release
       uses: ncipollo/release-action@v1
@@ -44,7 +59,7 @@ jobs:
         body: |
           ## What's Changed
           
-          See [CHANGELOG.md](https://github.com/B33b3k/dep_audit/blob/main/CHANGELOG.md) for detailed changes.
+          ${{ steps.changelog.outputs.CHANGELOG }}
           
           ## Installation
           
@@ -57,63 +72,12 @@ jobs:
           ```bash
           dep_audit --help
           ```
+          
+          ## Links
+          
+          - 📦 [pub.dev Package](https://pub.dev/packages/dep_audit)
+          - 📝 [Full Changelog](https://github.com/B33b3k/dep_audit/blob/main/CHANGELOG.md)
+          - 🐛 [Report Issues](https://github.com/B33b3k/dep_audit/issues)
         draft: false
         prerelease: ${{ contains(steps.version.outputs.VERSION, '-') }}
         generateReleaseNotes: true
-
-    - name: Publish to pub.dev
-      uses: dart-lang/setup-dart@v1
-      with:
-        dart-version: 'stable'
-    
-    - name: Setup pub credentials
-      run: |
-        mkdir -p ~/.pub-cache
-        echo '${{ secrets.PUB_CREDENTIALS }}' > ~/.pub-cache/credentials.json
-    
-    - name: Publish package
-      run: dart pub publish --force
-
-  # Build binaries for different platforms
-  build-binaries:
-    name: Build binaries
-    needs: release
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            target: linux-x64
-            artifact-name: dep_audit-linux-x64
-          - os: macos-latest
-            target: macos-x64
-            artifact-name: dep_audit-macos-x64
-          - os: windows-latest
-            target: windows-x64
-            artifact-name: dep_audit-windows-x64.exe
-    
-    runs-on: ${{ matrix.os }}
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Setup Dart SDK
-      uses: dart-lang/setup-dart@v1
-      with:
-        dart-version: 'stable'
-
-    - name: Install dependencies
-      run: dart pub get
-
-    - name: Build executable
-      run: dart compile exe bin/dep_audit.dart -o ${{ matrix.artifact-name }}
-
-    - name: Upload binary to release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ needs.release.outputs.upload_url }}
-        asset_path: ./${{ matrix.artifact-name }}
-        asset_name: ${{ matrix.artifact-name }}
-        asset_content_type: application/octet-stream
