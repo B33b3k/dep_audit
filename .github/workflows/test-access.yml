@@ -1,0 +1,25 @@
+name: Test Repository Access
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-access:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: List files
+      run: |
+        echo "Repository contents:"
+        ls -la
+        echo "Git status:"
+        git status
+        echo "Git remote:"
+        git remote -v
