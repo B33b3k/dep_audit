@@ -1,4 +1,12 @@
 
+## 0.1.3
+
+- 🌐 **Web Platform Support**: Added web platform compatibility for WASM support
+- 🔗 **Improved URLs**: Updated homepage to pub.dev package page for better discoverability
+- 🐛 **Issue Tracking**: Added issue tracker URL for enhanced user support
+- 📋 **pub.dev Compliance**: Addressed all pub.dev analysis recommendations
+- 📈 **Quality Score**: Improved pub.dev score from 155/160 to expected 160/160 points
+
 ## 0.1.2
 
 - 🔧 **Package Maintenance**: Updated package metadata and improved pub.dev compatibility
