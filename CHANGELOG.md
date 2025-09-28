@@ -1,4 +1,18 @@
 
+## [0.1.7] - 2025-09-28
+
+### Added
+- GitHub Packages publishing support for enterprise environments
+- Dual publishing to both pub.dev and GitHub Packages registries
+- Comprehensive GitHub Packages documentation (GITHUB_PACKAGES.md)
+- Multiple installation options with hosted URL support
+- GitHub Packages badge and installation instructions
+
+### Enhanced
+- Professional package distribution strategy with backup registry
+- Enterprise-friendly private package hosting capabilities
+- Improved documentation for multiple installation sources
+
 ## [0.1.6] - 2025-09-28
 
 ### Fixed
