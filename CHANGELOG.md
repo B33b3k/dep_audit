@@ -1,4 +1,12 @@
 
+## 0.1.5
+
+- 📦 **Package Optimization**: Added .pubignore to exclude development files from published package
+- 🔧 **Publishing Fix**: Resolved package validation warnings about gitignored files
+- 📉 **Size Reduction**: Reduced published package size from 57KB to 12KB
+- ✅ **Clean Validation**: Achieved 0 warnings in package validation
+- 🎯 **Professional Package**: Only essential files included in published version
+
 ## 0.1.4
 
 - 🚀 **Automated Publishing**: Implemented official GitHub Actions OIDC publishing
