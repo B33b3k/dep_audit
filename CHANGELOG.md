@@ -1,11 +1,28 @@
 
-## 0.1.5
+## [0.1.6] - 2024-01-XX
 
-- 📦 **Package Optimization**: Added .pubignore to exclude development files from published package
-- 🔧 **Publishing Fix**: Resolved package validation warnings about gitignored files
-- 📉 **Size Reduction**: Reduced published package size from 57KB to 12KB
-- ✅ **Clean Validation**: Achieved 0 warnings in package validation
-- 🎯 **Professional Package**: Only essential files included in published version
+### Fixed
+- GitHub Actions repository access issue by making repository public
+- Automated publishing pipeline now fully functional
+
+## [0.1.5] - 2024-01-XX
+
+### Added
+- Professional README with comprehensive badges and documentation
+- GitHub Actions CI/CD pipeline with multi-platform testing (Linux, macOS, Windows)
+- Automated code coverage reporting via Codecov
+- Contributing guidelines and issue templates
+- Automated pub.dev publishing via GitHub OIDC
+- Package optimization with .pubignore (reduced size from 57KB to 12KB)
+
+### Changed
+- Enhanced package metadata in pubspec.yaml
+- Updated documentation structure and formatting
+- Improved example code and usage instructions
+
+### Fixed
+- Web platform compatibility issues
+- Package validation warnings
 
 ## 0.1.4
 

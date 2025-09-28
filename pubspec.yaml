@@ -1,7 +1,7 @@
 
 name: dep_audit
-description: A lightweight dependency & package health auditor for Dart/Flutter projects.
-version: 0.1.5
+description: A comprehensive Dart and Flutter package dependency audit tool that helps identify outdated packages, security vulnerabilities, and provides actionable insights to maintain healthy project dependencies.
+version: 0.1.6
 homepage: https://pub.dev/packages/dep_audit
 repository: https://github.com/B33b3k/dep_audit
 issue_tracker: https://github.com/B33b3k/dep_audit/issues
