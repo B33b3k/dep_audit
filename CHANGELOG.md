@@ -1,11 +1,15 @@
 
-## [0.1.6] - 2024-01-XX
+## [0.1.6] - 2025-09-28
 
 ### Fixed
 - GitHub Actions repository access issue by making repository public
 - Automated publishing pipeline now fully functional
 
-## [0.1.5] - 2024-01-XX
+### Removed
+- Unnecessary development documentation and troubleshooting files
+- Internal scripts and build artifacts from public repository
+
+## [0.1.5] - 2025-09-28
 
 ### Added
 - Professional README with comprehensive badges and documentation

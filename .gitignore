@@ -1,6 +1,7 @@
-# Dart/Flutter build artifacts (keep some for development)
+# Dart/Flutter build artifacts
 .packages
 build/
+.dart_tool/
 
 # Coverage reports (exclude from git, but keep for CI)
 coverage/
@@ -18,6 +19,17 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Development and troubleshooting files (not for public repo)
+AUTOMATION_SETUP.md
+GITHUB_SETUP_COMPLETE.md  
+GITHUB_ACTIONS_TROUBLESHOOTING.md
+FINAL_SETUP_STEPS.md
+PUB_DEV_SETUP_GUIDE.md
+AUTHORS.md
+diagnose_github_actions.sh
+Makefile
+scripts/
 *~
 
 # Logs
