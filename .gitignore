@@ -1,0 +1,29 @@
+# Dart/Flutter build artifacts
+.dart_tool/
+.packages
+build/
+pubspec.lock
+
+# Coverage reports  
+coverage/
+*.lcov
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+.test_coverage.dart
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Logs
+*.log
