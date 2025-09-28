@@ -15,6 +15,7 @@
 [![Dart](https://img.shields.io/badge/Dart-3.0+-00599C.svg?style=flat-square&logo=dart)](https://dart.dev)
 [![Flutter](https://img.shields.io/badge/Flutter-Compatible-02569B.svg?style=flat-square&logo=flutter)](https://flutter.dev)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows%20%7C%20Web-lightgrey.svg?style=flat-square)](https://pub.dev/packages/dep_audit)
+[![GitHub Packages](https://img.shields.io/badge/GitHub%20Packages-Available-green.svg?style=flat-square&logo=github)](https://github.com/B33b3k/dep_audit/packages)
 
 </div>
 
@@ -63,6 +64,26 @@ Add as a dev dependency for team consistency:
 ```bash
 dart pub add --dev dep_audit
 ```
+
+### GitHub Packages Installation
+
+You can also install from GitHub Packages:
+
+```bash
+# Configure GitHub Packages (one-time setup)
+dart pub token add https://pub.pkg.github.com
+
+# Install from GitHub Packages
+dart pub global activate --source git https://github.com/B33b3k/dep_audit.git
+```
+
+### Alternative Sources
+
+| Source | Command | Use Case |
+|--------|---------|----------|
+| **pub.dev** | `dart pub global activate dep_audit` | ✅ Recommended for most users |
+| **GitHub Packages** | `dart pub token add https://pub.pkg.github.com && dart pub global activate dep_audit --hosted-url=https://pub.pkg.github.com` | 🔒 Enterprise/private registries |
+| **Git Repository** | `dart pub global activate --source git https://github.com/B33b3k/dep_audit.git` | 🚀 Latest development version |
 
 ## 🚀 Usage
 
